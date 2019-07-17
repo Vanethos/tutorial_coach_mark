@@ -10,22 +10,24 @@ import 'package:tutorial_coach_mark/util.dart';
 class TutorialCoachMarkWidget extends StatefulWidget {
   final List<TargetFocus> targets;
   final Function(TargetFocus) clickTarget;
-  final Function() finish;
+  final Function() onDispose;
   final Color colorShadow;
   final double opacityShadow;
   final double paddingFocus;
   final Function() clickSkip;
+  final Function() onTutorialEnd;
   final AlignmentGeometry alignSkip;
   final String textSkip;
   const TutorialCoachMarkWidget(
       {Key key,
         this.targets,
-        this.finish,
+        this.onDispose,
         this.paddingFocus = 10,
         this.clickTarget,
         this.alignSkip = Alignment.bottomRight,
         this.textSkip = "SKIP",
         this.clickSkip,
+        this.onTutorialEnd,
         this.colorShadow = Colors.black,
         this.opacityShadow = 0.8})
       : super(key: key);
@@ -49,7 +51,8 @@ class _TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
         children: <Widget>[
           AnimatedFocusLight(
             targets: widget.targets,
-            finish: widget.finish,
+            onDispose: widget.onDispose,
+            onTutorialEnd: widget.onTutorialEnd,
             paddingFocus: widget.paddingFocus,
             colorShadow: widget.colorShadow,
             opacityShadow: widget.opacityShadow,
@@ -192,7 +195,7 @@ class _TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
             duration: Duration(milliseconds: 300),
             child: InkWell(
               onTap: () {
-                widget.finish();
+                widget.onDispose();
                 if (widget.clickSkip != null) {
                   widget.clickSkip();
                 }
