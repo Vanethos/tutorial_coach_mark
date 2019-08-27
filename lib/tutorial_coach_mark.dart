@@ -48,8 +48,7 @@ class TutorialCoachMark {
         opacityShadow: opacityShadow,
         onTutorialEnd: onTutorialEnd,
         onDispose: () {
-          _hide();
-          if (onDispose != null) onDispose();
+          dispose();
         },
       );
     });
@@ -65,5 +64,10 @@ class TutorialCoachMark {
   void _hide() {
     _overlayEntry?.remove();
     _overlayEntry = null;
+  }
+
+  void dispose() {
+    _hide();
+    if (onDispose != null) onDispose();
   }
 }
